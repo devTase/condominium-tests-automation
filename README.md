@@ -46,6 +46,38 @@ The goal is to validate the full workflow (login, condominium management, CRUD o
   - `condominium-management.spec.ts` – condominium CRUD flow
 - `docs/backend-ui-gaps.md` – known API/UI contract gaps discovered while building tests
 
+## Adding & Running Tests
+1. **Author a spec**  
+   - Create a new `.spec.ts` inside `tests/`.  
+   - Import the shared `test` and `expect` helpers from `tests/fixtures`.  
+   - Prefer `data-testid` hooks when selecting elements. If the UI does not expose one yet, add it alongside the component change.
+
+2. **Follow the workflow pattern**  
+   - Use the `backend` fixture for direct API reads/writes (seed data, assertions, cleanup).  
+   - Leverage the `credentials` fixture for consistent login.  
+   - When the UI relies on the backend being up, add route shims or service calls inside the spec as shown in the existing tests.
+
+3. **Run tests locally**
+   - With automatic service start (default):  
+     ```bash
+     npm test
+     ```
+   - Against already running services:  
+     ```bash
+     E2E_NO_SERVICES=1 npm test
+     ```
+   - Focus on a single spec:  
+     ```bash
+     npx playwright test tests/my-new-spec.spec.ts
+     ```
+   - Use UI mode for debugging:  
+     ```bash
+     npm run test:ui
+     ```
+
+4. **Bypass backend auth when needed**  
+   - Set `SECURITY_BYPASS=true` before launching `mvnw quarkus:dev` (or the equivalent profile setting) if the auth system is not yet configured.
+
 ## Known Limitations
 - The UI pings `/health` which the backend doesn’t implement; tests shim this call.
 - Several mismatches exist between UI payloads and backend DTOs. See `docs/backend-ui-gaps.md` for full context and remediation recommendations.
