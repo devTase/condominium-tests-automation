@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout tests repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -37,17 +37,17 @@ jobs:
       SECURITY_BYPASS: 'true'
     steps:
       - name: Checkout tests repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout UI repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ github.repository_owner }}/condominium-hsh-ui
           path: condominium-hsh-ui
           fetch-depth: 0
 
       - name: Checkout backend repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ github.repository_owner }}/condominium-hsh-be
           path: condominium-hsh-be
